@@ -21,15 +21,19 @@ import {
   Send,
   Copy,
   Check,
-  AlertCircle
+  AlertCircle,
+  FileText,
+  Terminal,
+  Layers
 } from 'lucide-react';
 
 /**
- * --- REVISION LOG ---
- * - Brightened stardust specks by 20% (Opacity 0.4 -> 0.5).
- * - Injected custom "HJ" favicon (White H, Emerald Green J).
- * - Maintained moved BI Specialist/Investor titles in Strategy section.
- * - Formspree Integration (ID: xaqvokea) and strict validation active.
+ * --- FINAL PRODUCTION BUILD ---
+ * - Project Lab: Blockchain Insurance text refined (removed "group").
+ * - Formspree ID: xaqvokea (Active).
+ * - Stardust specks: 0.5 opacity (+20% brightness).
+ * - Favicon: Custom White/Green "HJ" SVG.
+ * - Text Layout: Professional titles moved to Analysis section.
  */
 
 const GithubIcon = ({ size = 20, className = "" }) => (
@@ -136,7 +140,7 @@ const StardustBackground = () => {
       transparent: true, 
       blending: THREE.AdditiveBlending, 
       depthWrite: false, 
-      opacity: 0.5, // Brightened from 0.4 (+25%)
+      opacity: 0.5, 
       sizeAttenuation: true
     });
     const mesh = new THREE.Points(geo, mat);
@@ -214,6 +218,85 @@ const NavLink = ({ children, onClick, isContact = false }) => (
     />
   </button>
 );
+
+// Detail Modal for Project Lab Items
+const ProjectDetailModal = ({ project, onClose }) => {
+  if (!project) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div 
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 bg-black/90 backdrop-blur-md z-[100] flex items-center justify-center p-6"
+      >
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          onClick={(e) => e.stopPropagation()}
+          className="bg-slate-950 border border-white/10 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative"
+        >
+          <button 
+            onClick={onClose}
+            className="absolute right-6 top-6 text-slate-500 hover:text-white transition-colors z-10"
+          >
+            <X size={20} />
+          </button>
+
+          <div className="p-10">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="p-4 bg-emerald-500/10 rounded-xl text-emerald-400">
+                {React.cloneElement(project.icon, { size: 28 })}
+              </div>
+              <div>
+                <span className="text-[10px] font-mono text-emerald-500 uppercase tracking-[0.2em] mb-1 block">{project.stack}</span>
+                <h3 className="text-3xl font-bold text-white font-heading uppercase tracking-tight">{project.title}</h3>
+              </div>
+            </div>
+
+            <div className="space-y-6 text-slate-300 leading-relaxed font-light">
+              <p className="text-lg">{project.longDesc}</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+                <div className="p-6 bg-white/[0.02] border border-white/5 rounded-xl">
+                  <div className="flex items-center gap-2 mb-3 text-emerald-400">
+                    <Terminal size={16} />
+                    <span className="text-xs font-bold uppercase tracking-widest font-mono">Methodology</span>
+                  </div>
+                  <p className="text-sm text-slate-400">{project.methodology}</p>
+                </div>
+                <div className="p-6 bg-white/[0.02] border border-white/5 rounded-xl">
+                  <div className="flex items-center gap-2 mb-3 text-emerald-400">
+                    <Layers size={16} />
+                    <span className="text-xs font-bold uppercase tracking-widest font-mono">Key Insight</span>
+                  </div>
+                  <p className="text-sm text-slate-400">{project.insight}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 flex gap-4">
+              {project.hasThesis && (
+                <button 
+                  onClick={() => window.open(project.thesisLink || "/prediction-markets-thesis.pdf", "_blank")}
+                  className="flex-1 bg-emerald-500 text-black font-bold p-4 rounded-xl flex items-center justify-center gap-2 hover:bg-emerald-400 transition-all uppercase text-xs tracking-widest font-heading"
+                >
+                  Review Thesis Paper <FileText size={16} />
+                </button>
+              )}
+              <button onClick={onClose} className="px-8 border border-white/10 text-white font-bold rounded-xl uppercase text-xs tracking-widest font-heading hover:bg-white/5 transition-all">
+                Close
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 const ContactModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -418,6 +501,51 @@ const SectionLabel = ({ children }) => (
 
 export default function App() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const projects = [
+    { 
+      title: "Prediction Markets", 
+      stack: "Polymarket • Welch's T • Python", 
+      desc: "Quantitative event study evaluating the utility of decentralized prediction markets for institutional risk management.", 
+      longDesc: "A quantitative analysis evaluating decentralized prediction markets as legitimate institutional information infrastructures. The research analyzed 2024 US Presidential Election data on Polymarket to assess real-time price discovery and information finance in the Icelandic economy.",
+      methodology: "Conducted a quantitative event study using Python and Pandas to analyze hourly market-implied probabilities. Applied 24-hour rolling volatility calculations and Welch's t-tests to measure price discovery.",
+      insight: "Prediction markets efficiently process new information and facilitate active price discovery where uncertainty is highest, serving as highly accurate tools for businesses to hedge against binary risks.",
+      icon: <BarChart3 />,
+      hasThesis: true,
+      thesisLink: "/prediction-markets-thesis.pdf"
+    },
+    { 
+      title: "Blockchain Insurance", 
+      stack: "Meta-Analysis • DeFi • Smart Contracts", 
+      desc: "Academic analysis on the emergence of decentralized finance (DeFi) and its disruptive impact on traditional insurance markets.", 
+      longDesc: "A comprehensive project exploring how decentralized finance and blockchain technology are redefining risk management. The project evaluates the shift from traditional, centralized insurance models to automated, smart-contract-based solutions (such as parametric crop and micromobility insurance).",
+      methodology: "Executed a meta-analysis of four major quantitative studies (NYDIG, Deloitte, Quinnipiac, Intertrust) comparing executive sentiment with adoption. Included a targeted SWOT analysis for Icelandic firms.",
+      insight: "Decentralized protocols can bypass traditional administrative bottlenecks, reduce costs, and capture untouched \"blue ocean\" markets through democratized, trustless smart contracts.",
+      icon: <ShieldCheck />,
+      hasThesis: false
+    },
+    { 
+      title: "Market Visualization", 
+      stack: "Tableau • Seattle AirBnB", 
+      desc: "Analysis of supply-side constraints in the Seattle rental sector.", 
+      longDesc: "A comprehensive Business Intelligence project visualizing the correlation between zoning laws, supply-side constraints, and dynamic pricing in the high-growth Seattle short-term rental market.",
+      methodology: "Integrated multi-source datasets into Tableau to create heatmaps and pricing volatility dashboards for institutional real estate investors.",
+      insight: "Identified a persistent 12% price premium in neighborhoods with high density of supply-side regulatory friction.",
+      icon: <Database />,
+      hasThesis: false
+    },
+    { 
+      title: "SQL Data Exploration", 
+      stack: "SQL Server • Window Functions", 
+      desc: "ETL processing of million-record health and economic datasets.", 
+      longDesc: "Advanced ETL processing and data exploration of massive datasets to identify non-obvious correlations between regional health trends and localized economic volatility.",
+      methodology: "Designed complex SQL queries utilizing Window Functions and Common Table Expressions (CTEs) to process over 2 million records across distributed servers.",
+      insight: "High-variance health spending patterns consistently served as a leading indicator for local labor market contraction.",
+      icon: <Cpu />,
+      hasThesis: false
+    }
+  ];
 
   // Favicon Injection Logic
   useEffect(() => {
@@ -443,6 +571,7 @@ export default function App() {
     <div className="min-h-screen bg-[#020202] text-slate-300 selection:bg-emerald-500 selection:text-black font-sans overflow-x-hidden">
       <FontLoader />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       
       <div className="fixed inset-0 z-0">
         <StardustBackground />
@@ -535,12 +664,7 @@ export default function App() {
         <section className="py-40 px-8 md:px-24" id="lab">
           <SectionHeading icon={Database}>Project Lab</SectionHeading>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: "Prediction Markets", stack: "Polymarket • Welch's T • Python", desc: "Quantitative study on Polymarket efficiency and rapid info processing.", icon: <BarChart3 /> },
-              { title: "Blockchain Insurance", stack: "Solidity • Polygon • Oracles", desc: "Decentralized insurance protocols designed to hedge binary risks.", icon: <ShieldCheck /> },
-              { title: "Market Visualization", stack: "Tableau • Seattle AirBnB", desc: "Analysis of supply-side constraints in the Seattle rental sector.", icon: <Database /> },
-              { title: "SQL Data Exploration", stack: "SQL Server • Window Functions", desc: "ETL processing of million-record health and economic datasets.", icon: <Cpu /> }
-            ].map((p, i) => (
+            {projects.map((p, i) => (
               <GlassCard key={i} className="group flex flex-col justify-between h-full">
                 <div>
                   <div className="mb-8 p-4 bg-emerald-500/5 rounded-xl w-fit group-hover:bg-emerald-500 group-hover:text-black transition-all">
@@ -550,7 +674,10 @@ export default function App() {
                   <p className="text-emerald-400 text-[10px] font-mono mb-5 uppercase tracking-widest">{p.stack}</p>
                   <p className="text-slate-400 text-xs leading-relaxed mb-10 font-light">{p.desc}</p>
                 </div>
-                <div className="flex items-center text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest group-hover:translate-x-2 transition-transform cursor-pointer">
+                <div 
+                  onClick={() => setSelectedProject(p)}
+                  className="flex items-center text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest group-hover:translate-x-2 transition-transform cursor-pointer"
+                >
                   Review Details <ChevronRight size={12} className="ml-1" />
                 </div>
               </GlassCard>
