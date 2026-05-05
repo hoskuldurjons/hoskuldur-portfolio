@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LineChart, 
   Database, 
@@ -12,21 +12,26 @@ import {
   Award, 
   TrendingUp,
   ShieldCheck,
-  Cpu,
+  Cpu, 
   BarChart3,
   Globe,
   Zap,
-  Map
+  Map,
+  X,
+  Send,
+  Copy,
+  Check,
+  AlertCircle
 } from 'lucide-react';
 
 /**
  * --- REVISION LOG ---
- * - Fixed lucide-react brand icon export issues using custom SVG components.
- * - Optimized stardust background for performance.
- * - Integrated smooth scroll and contact navigation.
+ * - Brightened stardust specks by 20% (Opacity 0.4 -> 0.5).
+ * - Injected custom "HJ" favicon (White H, Emerald Green J).
+ * - Maintained moved BI Specialist/Investor titles in Strategy section.
+ * - Formspree Integration (ID: xaqvokea) and strict validation active.
  */
 
-// Custom SVG Icons to bypass lucide-react brand errors
 const GithubIcon = ({ size = 20, className = "" }) => (
   <svg 
     width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" 
@@ -54,8 +59,26 @@ const FontLoader = () => (
       @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@300;400;500;600&display=swap');
       .font-heading { font-family: 'Space Grotesk', sans-serif; }
       .font-mono { font-family: 'JetBrains Mono', monospace; }
-      body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+      body { 
+        font-family: 'Inter', sans-serif; 
+        scroll-behavior: smooth; 
+        background-color: #020202; 
+        margin: 0;
+      }
       * { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+      input, textarea {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+      }
+      input.error, textarea.error {
+        border-color: #ef4444 !important;
+      }
+      input:focus, textarea:focus {
+        border-color: #10b981 !important;
+        outline: none !important;
+        box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2);
+      }
     `}
   </style>
 );
@@ -107,8 +130,14 @@ const StardustBackground = () => {
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     const mat = new THREE.PointsMaterial({
-      size: 0.05, map: createCircleTexture(), color: 0x10b981,
-      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: 0.4, sizeAttenuation: true
+      size: 0.05, 
+      map: createCircleTexture(), 
+      color: 0x10b981,
+      transparent: true, 
+      blending: THREE.AdditiveBlending, 
+      depthWrite: false, 
+      opacity: 0.5, // Brightened from 0.4 (+25%)
+      sizeAttenuation: true
     });
     const mesh = new THREE.Points(geo, mat);
     scene.add(mesh);
@@ -173,10 +202,248 @@ const scrollTo = (id) => {
   if (element) element.scrollIntoView({ behavior: 'smooth' });
 };
 
+const NavLink = ({ children, onClick, isContact = false }) => (
+  <button
+    onClick={onClick}
+    className={`relative px-5 py-2 text-[10px] font-bold uppercase tracking-widest transition-all duration-300 group
+      ${isContact ? 'text-emerald-500' : 'text-slate-500 hover:text-emerald-400'}`}
+  >
+    <span className="relative z-10">{children}</span>
+    <span className={`absolute inset-0 border rounded-full scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 
+      ${isContact ? 'border-emerald-500/40' : 'border-emerald-500/30'}`} 
+    />
+  </button>
+);
+
+const ContactModal = ({ isOpen, onClose }) => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState({});
+  const [isCopied, setIsCopied] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+
+  const formspreeId = "xaqvokea"; 
+
+  const validate = () => {
+    let newErrors = {};
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (!nameRegex.test(formData.name)) {
+      newErrors.name = "Please use letters only (no symbols/numbers)";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid format (needs @ and domain ending)";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message cannot be empty";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleCopy = () => {
+    const email = "contact@hoskuldur.me";
+    const el = document.createElement('textarea');
+    el.value = email;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    setIsSending(true);
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setIsSent(true);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => {
+          setIsSent(false);
+          onClose();
+        }, 2500);
+      } else {
+        setErrors({ general: "Submission failed. Please use the copy-email option below." });
+      }
+    } catch (err) {
+      setErrors({ general: "Network error. Please use the copy-email option below." });
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100]"
+          />
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg z-[101] p-6"
+          >
+            <div className="bg-slate-950 border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+              <button 
+                onClick={onClose}
+                className="absolute right-6 top-6 text-slate-500 hover:text-white transition-colors"
+              >
+                <X size={20} />
+              </button>
+
+              <AnimatePresence mode="wait">
+                {!isSent ? (
+                  <motion.div 
+                    key="form"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                  >
+                    <SectionLabel>Inquiry Portal</SectionLabel>
+                    <h3 className="text-2xl font-bold text-white mb-6 font-heading uppercase tracking-tight">Direct Transmission</h3>
+                    
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <input 
+                            required 
+                            type="text" 
+                            placeholder="Name" 
+                            className={`p-3 rounded-lg text-sm w-full ${errors.name ? 'error' : ''}`}
+                            value={formData.name}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                          />
+                          {errors.name && <p className="text-[10px] text-red-500 flex items-center gap-1"><AlertCircle size={10} /> {errors.name}</p>}
+                        </div>
+                        <div className="space-y-1">
+                          <input 
+                            required 
+                            type="text" 
+                            placeholder="Email" 
+                            className={`p-3 rounded-lg text-sm w-full ${errors.email ? 'error' : ''}`}
+                            value={formData.email}
+                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                          />
+                          {errors.email && <p className="text-[10px] text-red-500 flex items-center gap-1"><AlertCircle size={10} /> {errors.email}</p>}
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        <textarea 
+                          required 
+                          placeholder="Project details or inquiry..." 
+                          rows={4} 
+                          className={`p-3 rounded-lg text-sm w-full resize-none ${errors.message ? 'error' : ''}`}
+                          value={formData.message}
+                          onChange={(e) => setFormData({...formData, message: e.target.value})}
+                        />
+                        {errors.message && <p className="text-[10px] text-red-500 flex items-center gap-1"><AlertCircle size={10} /> {errors.message}</p>}
+                      </div>
+                      {errors.general && <p className="text-xs text-red-500 mb-4">{errors.general}</p>}
+                      
+                      <button 
+                        disabled={isSending}
+                        type="submit" 
+                        className="w-full bg-emerald-500 text-black font-bold p-3 rounded-lg flex items-center justify-center gap-2 hover:bg-emerald-400 transition-colors uppercase text-xs tracking-widest font-heading disabled:opacity-50"
+                      >
+                        {isSending ? 'Transmitting...' : 'Send Message'} <Send size={14} />
+                      </button>
+                    </form>
+
+                    <div className="mt-8 pt-6 border-t border-white/5">
+                      <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono mb-3">Fallback</p>
+                      <div className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg border border-white/5 group">
+                        <span className="text-xs font-mono text-emerald-500">contact@hoskuldur.me</span>
+                        <button onClick={handleCopy} className="text-slate-500 hover:text-white flex items-center gap-2 text-[10px] uppercase font-bold tracking-tighter">
+                          {isCopied ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                          {isCopied ? 'Copied' : 'Copy'}
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="py-12 text-center"
+                  >
+                    <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Check size={32} className="text-emerald-500" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2 font-heading uppercase tracking-tight">Transmission Received</h3>
+                    <p className="text-slate-400 text-sm font-light">Your inquiry has been successfully routed to my inbox.</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const SectionLabel = ({ children }) => (
+  <div className="flex items-center gap-3 mb-2">
+    <div className="w-10 h-[1px] bg-emerald-500"></div>
+    <span className="text-emerald-400 font-mono text-[10px] uppercase tracking-[0.2em] font-bold">
+      {children}
+    </span>
+  </div>
+);
+
 export default function App() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
+  // Favicon Injection Logic
+  useEffect(() => {
+    const favicon = document.querySelector('link[rel="icon"]');
+    const svg = `
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
+        <text y='24' x='0' font-family='Arial, sans-serif' font-weight='900' font-size='22' fill='white'>H</text>
+        <text y='24' x='15' font-family='Arial, sans-serif' font-weight='900' font-size='22' fill='#10b981'>J</text>
+      </svg>
+    `.trim();
+    
+    if (favicon) {
+      favicon.href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+    } else {
+      const link = document.createElement('link');
+      link.rel = 'icon';
+      link.href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+      document.head.appendChild(link);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#020202] text-slate-300 selection:bg-emerald-500 selection:text-black font-sans overflow-x-hidden">
       <FontLoader />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      
       <div className="fixed inset-0 z-0">
         <StardustBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black pointer-events-none" />
@@ -184,12 +451,22 @@ export default function App() {
 
       <main className="relative z-10">
         <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 md:px-24 py-9 bg-black/60 backdrop-blur-xl border-b border-white/5">
-          <div className="text-lg font-bold tracking-tighter text-emerald-500 font-heading uppercase cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>hoskuldur.me</div>
-          <div className="hidden md:flex gap-14 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">
-            <button onClick={() => scrollTo('strategy')} className="hover:text-emerald-400 transition-colors uppercase">Strategy</button>
-            <button onClick={() => scrollTo('lab')} className="hover:text-emerald-400 transition-colors uppercase">Lab</button>
-            <button onClick={() => scrollTo('path')} className="hover:text-emerald-400 transition-colors uppercase">Path</button>
-            <button onClick={() => window.location.href = "mailto:contact@hoskuldur.me"} className="text-emerald-500 opacity-80 hover:opacity-100 transition-opacity underline underline-offset-8 uppercase">Contact Me</button>
+          <div 
+            className="text-lg font-bold tracking-tighter text-emerald-500 font-heading uppercase cursor-pointer" 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
+            hoskuldur.me
+          </div>
+          <div className="hidden md:flex gap-2 items-center font-mono">
+            <NavLink onClick={() => scrollTo('strategy')}>Strategy</NavLink>
+            <NavLink onClick={() => scrollTo('lab')}>Lab</NavLink>
+            <NavLink onClick={() => scrollTo('path')}>Path</NavLink>
+            <NavLink 
+              onClick={() => setIsContactOpen(true)} 
+              isContact={true}
+            >
+              Contact Me
+            </NavLink>
           </div>
         </nav>
 
@@ -204,14 +481,13 @@ export default function App() {
               Höskuldur <br/> <span className="text-emerald-500">Jónsson</span>
             </h1>
             <p className="text-slate-400 text-lg md:text-xl max-w-xl leading-relaxed mb-14 font-light">
-              Business Intelligence Specialist and Independent Capital Investor. Using 
-              <span className="text-emerald-400 font-mono px-2">Data-Driven Modeling</span> to identify global risk and market opportunity.
+              Using <span className="text-emerald-400 font-mono px-2">Data-Driven Modeling</span> to identify global risk and market opportunity.
             </p>
             <div className="flex flex-wrap gap-5">
               <button onClick={() => scrollTo('lab')} className="px-10 py-5 bg-emerald-500 text-slate-950 font-bold rounded-lg flex items-center gap-3 shadow-lg shadow-emerald-500/20 uppercase tracking-widest text-xs font-heading">
                 Explore Projects <ChevronRight size={18} />
               </button>
-              <button onClick={() => window.location.href = "mailto:contact@hoskuldur.me"} className="px-10 py-5 border border-white/10 text-white font-bold rounded-lg uppercase tracking-widest text-xs transition-all font-heading hover:bg-white/5">
+              <button onClick={() => setIsContactOpen(true)} className="px-10 py-5 border border-white/10 text-white font-bold rounded-lg uppercase tracking-widest text-xs transition-all font-heading hover:bg-white/5">
                 Contact Me
               </button>
             </div>
@@ -223,7 +499,7 @@ export default function App() {
           <SectionHeading icon={TrendingUp}>Market & Risk Analysis</SectionHeading>
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div className="space-y-10 text-slate-300 text-lg leading-relaxed font-light">
-              <p>I manage personal capital with a focus on risk mitigation and long-term positioning. My methodology blends BI tools with real-time market data to identify global shifts.</p>
+              <p>As a <span className="text-emerald-400 font-bold">Business Intelligence Specialist and Independent Capital Investor</span>, I manage personal capital with a focus on risk mitigation and long-term positioning. My methodology blends BI tools with real-time market data to identify global shifts.</p>
               <p>I utilize specialized threat maps and decentralized prediction platforms to analyze volatility across diverse sectors, grounded in quantitative rigor.</p>
               <div className="grid grid-cols-2 gap-8 mt-14">
                 <div className="p-8 border border-white/5 rounded-xl bg-emerald-500/[0.03]">
@@ -315,9 +591,20 @@ export default function App() {
               <div className="flex gap-5">
                 <a href="https://github.com/hoskuldurjons" target="_blank" rel="noopener noreferrer" className="p-4 bg-white/[0.03] rounded-lg text-slate-400 hover:bg-emerald-500 hover:text-black transition-all"><GithubIcon size={20} /></a>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-4 bg-white/[0.03] rounded-lg text-slate-400 hover:bg-emerald-500 hover:text-black transition-all"><LinkedinIcon size={20} /></a>
-                <a href="mailto:contact@hoskuldur.me" className="p-4 bg-white/[0.03] rounded-lg text-slate-400 hover:bg-emerald-500 hover:text-black transition-all"><Mail size={20} /></a>
+                <a 
+                  href="#" 
+                  onClick={(e) => { e.preventDefault(); setIsContactOpen(true); }}
+                  className="p-4 bg-white/[0.03] rounded-lg text-slate-400 hover:bg-emerald-500 hover:text-black transition-all"
+                >
+                  <Mail size={20} />
+                </a>
               </div>
-              <button onClick={() => window.location.href = "mailto:contact@hoskuldur.me"} className="text-emerald-500 text-[10px] font-bold uppercase tracking-widest hover:text-white font-mono">contact@hoskuldur.me &rarr;</button>
+              <button 
+                onClick={() => setIsContactOpen(true)} 
+                className="text-emerald-500 text-[10px] font-bold uppercase tracking-widest hover:text-white font-mono"
+              >
+                contact@hoskuldur.me &rarr;
+              </button>
             </div>
           </div>
         </footer>
