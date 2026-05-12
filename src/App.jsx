@@ -288,7 +288,7 @@ const ProjectDetailModal = ({ project, onClose }) => {
                 </button>
               )}
               <button onClick={onClose} className="px-8 border border-white/10 text-white font-bold rounded-xl uppercase text-xs tracking-widest font-heading hover:bg-white/5 transition-all">
-                Close
+                Loka
               </button>
             </div>
           </div>
@@ -505,43 +505,43 @@ export default function App() {
 
   const projects = [
     { 
-      title: "Prediction Markets", 
+      title: "Spámarkaðir", 
       stack: "Polymarket • Welch's T • Python", 
-      desc: "Quantitative event study evaluating the utility of decentralized prediction markets for institutional risk management.", 
-      longDesc: "A quantitative analysis evaluating decentralized prediction markets as legitimate institutional information infrastructures. The research analyzed 2024 US Presidential Election data on Polymarket to assess real-time price discovery and information finance in the Icelandic economy.",
-      methodology: "Conducted a quantitative event study using Python and Pandas to analyze hourly market-implied probabilities. Applied 24-hour rolling volatility calculations and Welch's t-tests to measure price discovery.",
-      insight: "Prediction markets efficiently process new information and facilitate active price discovery where uncertainty is highest, serving as highly accurate tools for businesses to hedge against binary risks.",
+      desc: "Magnbundin tilviksrannsókn sem leggur mat á notagildi dreifstýrðra spámarkaða fyrir áhættustýringu fyrirtækja.", 
+      longDesc: "Magnbundin greining sem leggur mat á dreifstýrða spámarkaði sem lögmæta upplýsingainnviði fyrir stofnanir. Rannsóknin greindi gögn úr forsetakosningum Bandaríkjanna 2024 á Polymarket til að meta upplýsingafjármögnun og rauntíma verðmyndun í íslensku hagkerfi.",
+      methodology: "Framkvæmdi magnbundna rannsókn með Python og Pandas til að greina klukkustundarverð og markaðslíkur. Beitti 24-stunda flöktmælingum og Welch's t-prófum til að mæla verðmyndun.",
+      insight: "Spámarkaðir vinna úr nýjum upplýsingum á skilvirkan hátt og auðvelda verðmyndun þar sem óvissan er mest, sem gerir þá að nákvæmu tæki fyrir fyrirtæki til að verja sig gegn tvíundaráhættu.",
       icon: <BarChart3 />,
       hasThesis: true,
       thesisLink: "/prediction-markets-thesis.pdf"
     },
     { 
-      title: "Blockchain Insurance", 
+      title: "Blockchain tryggingar", 
       stack: "Meta-Analysis • DeFi • Smart Contracts", 
-      desc: "Academic analysis on the emergence of decentralized finance (DeFi) and its disruptive impact on traditional insurance markets.", 
-      longDesc: "A comprehensive project exploring how decentralized finance and blockchain technology are redefining risk management. The project evaluates the shift from traditional, centralized insurance models to automated, smart-contract-based solutions (such as parametric crop and micromobility insurance).",
-      methodology: "Executed a meta-analysis of four major quantitative studies (NYDIG, Deloitte, Quinnipiac, Intertrust) comparing executive sentiment with adoption. Included a targeted SWOT analysis for Icelandic firms.",
-      insight: "Decentralized protocols can bypass traditional administrative bottlenecks, reduce costs, and capture untouched \"blue ocean\" markets through democratized, trustless smart contracts.",
+      desc: "Fræðileg greining á tilkomu dreifstýrðra fjármála (DeFi) og truflandi áhrifum þeirra á hefðbundna tryggingamarkaði.", 
+      longDesc: "Yfirgripsmikið verkefni sem kannar hvernig dreifstýrð fjármál og blockchain-tækni eru að endurskilgreina áhættustýringu. Verkefnið leggur mat á breytinguna frá hefðbundnum, miðstýrðum tryggingalíkönum yfir í sjálfvirkar lausnir byggðar á snjallsamningum.",
+      methodology: "Framkvæmdi meta-greiningu á fjórum stórum megindlegum rannsóknum (NYDIG, Deloitte, Quinnipiac, Intertrust) sem bera saman viðhorf stjórnenda við raunverulega innleiðingu. Inniheldur sértæka SVÓT-greiningu fyrir íslensk fyrirtæki.",
+      insight: "Dreifstýrðar samskiptareglur geta farið fram hjá hefðbundnum stjórnsýsluhindrunum, lækkað kostnað og nýtt ósnortna markaði með lýðræðislegum snjallsamningum.",
       icon: <ShieldCheck />,
       hasThesis: false
     },
     { 
-      title: "Market Visualization", 
+      title: "Myndræn framsetning", 
       stack: "Tableau • Seattle AirBnB", 
-      desc: "Analysis of supply-side constraints in the Seattle rental sector.", 
-      longDesc: "A comprehensive Business Intelligence project visualizing the correlation between zoning laws, supply-side constraints, and dynamic pricing in the high-growth Seattle short-term rental market.",
-      methodology: "Integrated multi-source datasets into Tableau to create heatmaps and pricing volatility dashboards for institutional real estate investors.",
-      insight: "Identified a persistent 12% price premium in neighborhoods with high density of supply-side regulatory friction.",
+      desc: "Greining á framboðshlið og takmörkunum í gistigeiranum í Seattle.", 
+      longDesc: "Viðskiptagreindarverkefni sem sýnir fylgni milli deiliskipulags, framboðstakmarkana og dýnamískrar verðlagningar á skammtímaleigumarkaði í Seattle.",
+      methodology: "Samþætti mörg gagnasöfn í Tableau til að búa til hitakort og mælaborð fyrir verðsveiflur, ætlað fasteignafjárfestum.",
+      insight: "Greindi 12% verðálag í hverfum þar sem framboðshliðin mætir verulegum reglugerðarhindrunum.",
       icon: <Database />,
       hasThesis: false
     },
     { 
-      title: "SQL Data Exploration", 
+      title: "SQL Gagnavinnsla", 
       stack: "SQL Server • Window Functions", 
-      desc: "ETL processing of million-record health and economic datasets.", 
-      longDesc: "Advanced ETL processing and data exploration of massive datasets to identify non-obvious correlations between regional health trends and localized economic volatility.",
-      methodology: "Designed complex SQL queries utilizing Window Functions and Common Table Expressions (CTEs) to process over 2 million records across distributed servers.",
-      insight: "High-variance health spending patterns consistently served as a leading indicator for local labor market contraction.",
+      desc: "ETL vinnsla á milljóna færslna heilbrigðis- og efnahagsgagnasöfnum.", 
+      longDesc: "Háþróuð ETL vinnsla og gagna könnun á gríðarstórum gagnasöfnum til að greina fylgni milli svæðisbundinna heilbrigðisstrauma og staðbundins efnahagslegs óstöðugleika.",
+      methodology: "Hannaði flóknar SQL fyrirspurnir með Window Functions og CTEs til að vinna yfir 2 milljónir færslna á dreifðum netþjónum.",
+      insight: "Sveiflur í útgjöldum til heilbrigðismála reyndust vera leiðandi vísbending um samdrátt á staðbundnum vinnumarkaði.",
       icon: <Cpu />,
       hasThesis: false
     }
@@ -587,14 +587,14 @@ export default function App() {
             hoskuldur.me
           </div>
           <div className="hidden md:flex gap-2 items-center font-mono">
-            <NavLink onClick={() => scrollTo('strategy')}>Strategy</NavLink>
-            <NavLink onClick={() => scrollTo('lab')}>Lab</NavLink>
-            <NavLink onClick={() => scrollTo('path')}>Path</NavLink>
+            <NavLink onClick={() => scrollTo('stefna')}>Stefna</NavLink>
+            <NavLink onClick={() => scrollTo('verkefni')}>Verkefni</NavLink>
+            <NavLink onClick={() => scrollTo('ferill')}>Ferill</NavLink>
             <NavLink 
               onClick={() => setIsContactOpen(true)} 
               isContact={true}
             >
-              Contact Me
+              Hafa Samband // Contact Me
             </NavLink>
           </div>
         </nav>
@@ -604,40 +604,40 @@ export default function App() {
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-[1px] bg-emerald-500"></div>
-              <span className="text-emerald-400 font-mono tracking-widest uppercase text-xs">Strategic Data Intelligence</span>
+              <span className="text-emerald-400 font-mono tracking-widest uppercase text-xs">Strategísk gagnagreind</span>
             </div>
             <h1 className="text-7xl md:text-[110px] font-bold text-white leading-none mb-10 font-heading tracking-tighter">
               Höskuldur <br/> <span className="text-emerald-500">Jónsson</span>
             </h1>
             <p className="text-slate-400 text-lg md:text-xl max-w-xl leading-relaxed mb-14 font-light">
-              Using <span className="text-emerald-400 font-mono px-2">Data-Driven Modeling</span> to identify global risk and market opportunity.
+              Notkun <span className="text-emerald-400 font-mono px-2">gagnadrifinna líkanagerðar</span> til að greina alþjóðlega áhættu og markaðstækifæri.
             </p>
             <div className="flex flex-wrap gap-5">
-              <button onClick={() => scrollTo('lab')} className="px-10 py-5 bg-emerald-500 text-slate-950 font-bold rounded-lg flex items-center gap-3 shadow-lg shadow-emerald-500/20 uppercase tracking-widest text-xs font-heading">
-                Explore Projects <ChevronRight size={18} />
+              <button onClick={() => scrollTo('ferill')} className="px-10 py-5 bg-emerald-500 text-slate-950 font-bold rounded-lg flex items-center gap-3 shadow-lg shadow-emerald-500/20 uppercase tracking-widest text-xs font-heading">
+                Skoða verkefni <ChevronRight size={18} />
               </button>
               <button onClick={() => setIsContactOpen(true)} className="px-10 py-5 border border-white/10 text-white font-bold rounded-lg uppercase tracking-widest text-xs transition-all font-heading hover:bg-white/5">
-                Contact Me
+                Hafa samband
               </button>
             </div>
           </motion.div>
         </section>
 
         {/* Analysis Section */}
-        <section className="py-40 px-8 md:px-24 bg-black/60 relative" id="strategy">
-          <SectionHeading icon={TrendingUp}>Market & Risk Analysis</SectionHeading>
+        <section className="py-40 px-8 md:px-24 bg-black/60 relative" id="stefna">
+          <SectionHeading icon={TrendingUp}>Markaðs- og áhættugreining</SectionHeading>
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div className="space-y-10 text-slate-300 text-lg leading-relaxed font-light">
-              <p>As a <span className="text-emerald-400 font-bold">Business Intelligence Specialist and Independent Capital Investor</span>, I manage personal capital with a focus on risk mitigation and long-term positioning. My methodology blends BI tools with real-time market data to identify global shifts.</p>
-              <p>I utilize specialized threat maps and decentralized prediction platforms to analyze volatility across diverse sectors, grounded in quantitative rigor.</p>
+              <p>Sem sérfræðingur <span className="text-emerald-400 font-bold">í viðskiptagreind og sjálfstæður fjárfestir</span>, stýri ég eigin fjármagni með áherslu á áhættustýringu og langtímastöðu. Aðferðafræði mín samþættir tól viðskiptagreindar við markaðsgögn í rauntíma til að greina markaðsbreytingar.</p>
+              <p>Ég nýti sérhæfð áhættukort og dreifstýrða spámarkaði til að greina flökt í ólíkum geirum, með áherslu á magnbundna nákvæmni.</p>
               <div className="grid grid-cols-2 gap-8 mt-14">
                 <div className="p-8 border border-white/5 rounded-xl bg-emerald-500/[0.03]">
-                  <div className="text-emerald-400 font-bold font-heading text-4xl mb-2 font-mono">RISK</div>
-                  <div className="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-bold text-center">Personal Portfolio</div>
+                  <div className="text-emerald-400 font-bold font-heading text-4xl mb-2 font-mono">ÁHÆTTA</div>
+                  <div className="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-bold text-center">Eigið eignasafn</div>
                 </div>
                 <div className="p-8 border border-white/5 rounded-xl bg-emerald-500/[0.03]">
-                  <div className="text-emerald-400 font-bold font-heading text-4xl mb-2 font-mono">BI</div>
-                  <div className="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-bold text-center">Decision Support</div>
+                  <div className="text-emerald-400 font-bold font-heading text-4xl mb-2 font-mono">VIÐSKIPTAGREIND</div>
+                  <div className="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-bold text-center">Ákvarðanastuðningur</div>
                 </div>
               </div>
             </div>
@@ -645,15 +645,15 @@ export default function App() {
               <GlassCard className="flex items-start gap-6 border-l border-emerald-500/50">
                 <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-lg"><Map size={22}/></div>
                 <div>
-                  <h4 className="text-white font-bold mb-2 uppercase tracking-wide font-heading text-sm">Global Threat Synthesis</h4>
-                  <p className="text-sm text-slate-400 leading-relaxed">Identifying geopolitical threats via global threat maps and analyzing market impacts.</p>
+                  <h4 className="text-white font-bold mb-2 uppercase tracking-wide font-heading text-sm">Alþjóðleg áhættugreining</h4>
+                  <p className="text-sm text-slate-400 leading-relaxed">Greining landfræðilegra áhættuþátta með gagnvirkum kortum og mat á markaðsáhrifum.</p>
                 </div>
               </GlassCard>
               <GlassCard className="flex items-start gap-6 border-l border-emerald-500/50">
                 <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-lg"><Zap size={22}/></div>
                 <div>
-                  <h4 className="text-white font-bold mb-2 uppercase tracking-wide font-heading text-sm">Web3 & DeFi Focus</h4>
-                  <p className="text-sm text-slate-400 leading-relaxed">Actively studying decentralized finance protocols and prediction markets.</p>
+                  <h4 className="text-white font-bold mb-2 uppercase tracking-wide font-heading text-sm">Áherlsa á Web3 og DeFi</h4>
+                  <p className="text-sm text-slate-400 leading-relaxed">Virkt eftirlit með dreifstýrðum fjármálavettvöngum (DeFi) og spámörkuðum.</p>
                 </div>
               </GlassCard>
             </div>
@@ -661,8 +661,8 @@ export default function App() {
         </section>
 
         {/* Project Lab */}
-        <section className="py-40 px-8 md:px-24" id="lab">
-          <SectionHeading icon={Database}>Project Lab</SectionHeading>
+        <section className="py-40 px-8 md:px-24" id="verkefni">
+          <SectionHeading icon={Database}>Verkefni</SectionHeading>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {projects.map((p, i) => (
               <GlassCard key={i} className="group flex flex-col justify-between h-full">
@@ -678,7 +678,7 @@ export default function App() {
                   onClick={() => setSelectedProject(p)}
                   className="flex items-center text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest group-hover:translate-x-2 transition-transform cursor-pointer"
                 >
-                  Review Details <ChevronRight size={12} className="ml-1" />
+                  Skoða nánar <ChevronRight size={12} className="ml-1" />
                 </div>
               </GlassCard>
             ))}
@@ -686,15 +686,16 @@ export default function App() {
         </section>
 
         {/* Path Section */}
-        <section className="py-40 px-8 md:px-24 bg-slate-900/10" id="path">
-          <SectionHeading icon={Briefcase}>Professional Path</SectionHeading>
+        <section className="py-40 px-8 md:px-24 bg-slate-900/10" id="ferill">
+          <SectionHeading icon={Briefcase}>Ferill</SectionHeading>
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
             {[
-              { period: "2023 — 2026", title: "Chief Executive Officer", org: "CIN CIN ehf.", desc: "Architected inventory models and Power BI frameworks for trade stability." },
-              { period: "2022 — 2023", title: "Marketing Representative", org: "Tíu Vín", desc: "Digital ROI analytics utilizing Power BI and Google Analytics suites." },
-              { period: "2021", title: "Assistant to Marketing Manager", org: "Deloitte", desc: "Sector trend analysis and strategic material prep for executive reporting." },
-              { period: "2026", title: "BSc Business (BI Emphasis)", org: "University of Bifröst", desc: "Thesis: Evaluation of Decentralized Prediction Markets for Institutional Risk." }
+              { period: "2023 — 2026", title: "Framkvæmdastjóri", org: "CIN CIN ehf.", desc: "Hannaði birgðalíkön og Power BI umgjörð fyrir rekstrarstöðugleika." },
+              { period: "2022 — 2023", title: "Markaðsfulltrúi", org: "Tíu Vín", desc: "Arðsemisgreining stafrænnar markaðssetningar með Power BI og Google Analytics." },
+              { period: "2021", title: "Aðstoðarmaður markaðsstjóra", org: "Deloitte", desc: "Greining á markaðsþróun og gerð stefnumótandi efnis fyrir stjórnendaskýrslur." },
+              { period: "2026", title: "BSc Viðskiptafræði (Viðskiptagreind)", org: "Háskólinn á Bifröst", desc: "Ritgerð: Greining á notagildi spámarkaða fyrir upplýsingaöflun stofnana á áhættustýringu." }
             ].map((item, idx) => (
+              // ...mapping code
               <div key={idx} className="relative pl-10 border-l border-white/5">
                 <div className="absolute left-[-1px] top-0 w-[2px] h-full bg-gradient-to-b from-emerald-500 to-transparent opacity-40"></div>
                 <div className="absolute left-[-4px] top-0 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
@@ -712,7 +713,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-16">
             <div>
               <h2 className="text-2xl font-bold text-white mb-3 font-heading uppercase tracking-tighter">Höskuldur Jónsson</h2>
-              <p className="text-slate-600 text-[10px] tracking-widest uppercase font-mono">hoskuldur.me • Quantitative Excellence</p>
+              <p className="text-slate-600 text-[10px] tracking-widest uppercase font-mono">hoskuldur.me • Áhætta og greining</p>
             </div>
             <div className="flex flex-col items-center md:items-end gap-8">
               <div className="flex gap-5">
