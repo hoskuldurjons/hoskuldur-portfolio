@@ -264,14 +264,14 @@ const ProjectDetailModal = ({ project, onClose }) => {
                 <div className="p-6 bg-white/[0.02] border border-white/5 rounded-xl">
                   <div className="flex items-center gap-2 mb-3 text-emerald-400">
                     <Terminal size={16} />
-                    <span className="text-xs font-bold uppercase tracking-widest font-mono">Methodology</span>
+                    <span className="text-xs font-bold uppercase tracking-widest font-mono">Aðferðafræði</span>
                   </div>
                   <p className="text-sm text-slate-400">{project.methodology}</p>
                 </div>
                 <div className="p-6 bg-white/[0.02] border border-white/5 rounded-xl">
                   <div className="flex items-center gap-2 mb-3 text-emerald-400">
                     <Layers size={16} />
-                    <span className="text-xs font-bold uppercase tracking-widest font-mono">Key Insight</span>
+                    <span className="text-xs font-bold uppercase tracking-widest font-mono">Meginniðurstaða</span>
                   </div>
                   <p className="text-sm text-slate-400">{project.insight}</p>
                 </div>
@@ -284,7 +284,7 @@ const ProjectDetailModal = ({ project, onClose }) => {
                   onClick={() => window.open(project.thesisLink || "/prediction-markets-thesis.pdf", "_blank")}
                   className="flex-1 bg-emerald-500 text-black font-bold p-4 rounded-xl flex items-center justify-center gap-2 hover:bg-emerald-400 transition-all uppercase text-xs tracking-widest font-heading"
                 >
-                  Review Thesis Paper <FileText size={16} />
+                  Skoða rannsókn <FileText size={16} />
                 </button>
               )}
               <button onClick={onClose} className="px-8 border border-white/10 text-white font-bold rounded-xl uppercase text-xs tracking-widest font-heading hover:bg-white/5 transition-all">
@@ -507,9 +507,9 @@ export default function App() {
     { 
       title: "Spámarkaðir", 
       stack: "Polymarket • Welch's T • Python", 
-      desc: "Magnbundin tilviksrannsókn sem leggur mat á notagildi dreifstýrðra spámarkaða fyrir áhættustýringu fyrirtækja.", 
-      longDesc: "Magnbundin greining sem leggur mat á dreifstýrða spámarkaði sem lögmæta upplýsingainnviði fyrir stofnanir. Rannsóknin greindi gögn úr forsetakosningum Bandaríkjanna 2024 á Polymarket til að meta upplýsingafjármögnun og rauntíma verðmyndun í íslensku hagkerfi.",
-      methodology: "Framkvæmdi magnbundna rannsókn með Python og Pandas til að greina klukkustundarverð og markaðslíkur. Beitti 24-stunda flöktmælingum og Welch's t-prófum til að mæla verðmyndun.",
+      desc: "Megindleg greining sem leggur mat á notagildi dreifstýrðra spámarkaða fyrir áhættustýringu fyrirtækja.", 
+      longDesc: "Megindleg greining sem leggur mat á dreifstýrða spámarkaði sem lögmæta upplýsingainnviði fyrir stofnanir. Rannsóknin greindi gögn úr forsetakosningum Bandaríkjanna 2024 á Polymarket til að meta upplýsingafjármögnun og rauntíma verðmyndun í íslensku hagkerfi.",
+      aðferðafræði: "Framkvæmdi magnbundna rannsókn með Python og Pandas til að greina klukkustundarverð og markaðslíkur. Beitti 24-stunda flöktmælingum og Welch's t-prófum til að mæla verðmyndun.",
       insight: "Spámarkaðir vinna úr nýjum upplýsingum á skilvirkan hátt og auðvelda verðmyndun þar sem óvissan er mest, sem gerir þá að nákvæmu tæki fyrir fyrirtæki til að verja sig gegn tvíundaráhættu.",
       icon: <BarChart3 />,
       hasThesis: true,
@@ -520,7 +520,7 @@ export default function App() {
       stack: "Meta-Analysis • DeFi • Smart Contracts", 
       desc: "Fræðileg greining á tilkomu dreifstýrðra fjármála (DeFi) og truflandi áhrifum þeirra á hefðbundna tryggingamarkaði.", 
       longDesc: "Yfirgripsmikið verkefni sem kannar hvernig dreifstýrð fjármál og blockchain-tækni eru að endurskilgreina áhættustýringu. Verkefnið leggur mat á breytinguna frá hefðbundnum, miðstýrðum tryggingalíkönum yfir í sjálfvirkar lausnir byggðar á snjallsamningum.",
-      methodology: "Framkvæmdi meta-greiningu á fjórum stórum megindlegum rannsóknum (NYDIG, Deloitte, Quinnipiac, Intertrust) sem bera saman viðhorf stjórnenda við raunverulega innleiðingu. Inniheldur sértæka SVÓT-greiningu fyrir íslensk fyrirtæki.",
+      aðferðafræði: "Framkvæmdi meta-greiningu á fjórum stórum megindlegum rannsóknum (NYDIG, Deloitte, Quinnipiac, Intertrust) sem bera saman viðhorf stjórnenda við raunverulega innleiðingu. Inniheldur sértæka SVÓT-greiningu fyrir íslensk fyrirtæki.",
       insight: "Dreifstýrðar samskiptareglur geta farið fram hjá hefðbundnum stjórnsýsluhindrunum, lækkað kostnað og nýtt ósnortna markaði með lýðræðislegum snjallsamningum.",
       icon: <ShieldCheck />,
       hasThesis: false
@@ -530,7 +530,7 @@ export default function App() {
       stack: "Tableau • Seattle AirBnB", 
       desc: "Greining á framboðshlið og takmörkunum í gistigeiranum í Seattle.", 
       longDesc: "Viðskiptagreindarverkefni sem sýnir fylgni milli deiliskipulags, framboðstakmarkana og dýnamískrar verðlagningar á skammtímaleigumarkaði í Seattle.",
-      methodology: "Samþætti mörg gagnasöfn í Tableau til að búa til hitakort og mælaborð fyrir verðsveiflur, ætlað fasteignafjárfestum.",
+      aðferðafræði: "Samþætti mörg gagnasöfn í Tableau til að búa til hitakort og mælaborð fyrir verðsveiflur, ætlað fasteignafjárfestum.",
       insight: "Greindi 12% verðálag í hverfum þar sem framboðshliðin mætir verulegum reglugerðarhindrunum.",
       icon: <Database />,
       hasThesis: false
@@ -538,9 +538,9 @@ export default function App() {
     { 
       title: "SQL Gagnavinnsla", 
       stack: "SQL Server • Window Functions", 
-      desc: "ETL vinnsla á milljóna færslna heilbrigðis- og efnahagsgagnasöfnum.", 
+      desc: "ETL vinnsla á stórum heilbrigðis- og efnahagsgagnasöfnum.", 
       longDesc: "Háþróuð ETL vinnsla og gagna könnun á gríðarstórum gagnasöfnum til að greina fylgni milli svæðisbundinna heilbrigðisstrauma og staðbundins efnahagslegs óstöðugleika.",
-      methodology: "Hannaði flóknar SQL fyrirspurnir með Window Functions og CTEs til að vinna yfir 2 milljónir færslna á dreifðum netþjónum.",
+      aðferðafræði: "Hannaði flóknar SQL fyrirspurnir með Window Functions og CTEs til að vinna yfir 2 milljónir færslna úr heilbrigðisgagnagrunni.",
       insight: "Sveiflur í útgjöldum til heilbrigðismála reyndust vera leiðandi vísbending um samdrátt á staðbundnum vinnumarkaði.",
       icon: <Cpu />,
       hasThesis: false
@@ -610,7 +610,7 @@ export default function App() {
               Höskuldur <br/> <span className="text-emerald-500">Jónsson</span>
             </h1>
             <p className="text-slate-400 text-lg md:text-xl max-w-xl leading-relaxed mb-14 font-light">
-              Notkun <span className="text-emerald-400 font-mono px-2">gagnadrifinna líkanagerðar</span> til að greina alþjóðlega áhættu og markaðstækifæri.
+              Notkun <span className="text-emerald-400 font-mono px-2">gagnadrifinnar líkanagerðar</span> til að greina alþjóðlega áhættu og markaðstækifæri.
             </p>
             <div className="flex flex-wrap gap-5">
               <button onClick={() => scrollTo('ferill')} className="px-10 py-5 bg-emerald-500 text-slate-950 font-bold rounded-lg flex items-center gap-3 shadow-lg shadow-emerald-500/20 uppercase tracking-widest text-xs font-heading">
@@ -693,7 +693,7 @@ export default function App() {
               { period: "2023 — 2026", title: "Framkvæmdastjóri", org: "CIN CIN ehf.", desc: "Hannaði birgðalíkön og Power BI umgjörð fyrir rekstrarstöðugleika." },
               { period: "2022 — 2023", title: "Markaðsfulltrúi", org: "Tíu Vín", desc: "Arðsemisgreining stafrænnar markaðssetningar með Power BI og Google Analytics." },
               { period: "2021", title: "Aðstoðarmaður markaðsstjóra", org: "Deloitte", desc: "Greining á markaðsþróun og gerð stefnumótandi efnis fyrir stjórnendaskýrslur." },
-              { period: "2026", title: "BSc Viðskiptafræði (Viðskiptagreind)", org: "Háskólinn á Bifröst", desc: "Ritgerð: Greining á notagildi spámarkaða fyrir upplýsingaöflun stofnana á áhættustýringu." }
+              { period: "2026", title: "BSc Viðskiptafræði (Viðskiptagreind)", org: "Háskólinn á Bifröst", desc: "Ritgerð: Greining á notagildi spámarkaða fyrir upplýsingaöflun stofnana og áhættustýringu." }
             ].map((item, idx) => (
               // ...mapping code
               <div key={idx} className="relative pl-10 border-l border-white/5">
@@ -713,7 +713,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-16">
             <div>
               <h2 className="text-2xl font-bold text-white mb-3 font-heading uppercase tracking-tighter">Höskuldur Jónsson</h2>
-              <p className="text-slate-600 text-[10px] tracking-widest uppercase font-mono">hoskuldur.me • Áhætta og greining</p>
+              <p className="text-slate-600 text-[10px] tracking-widest uppercase font-mono">hoskuldur.me • Gagnadrifin nákvæmni</p>
             </div>
             <div className="flex flex-col items-center md:items-end gap-8">
               <div className="flex gap-5">
