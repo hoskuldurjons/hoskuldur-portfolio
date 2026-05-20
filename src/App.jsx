@@ -621,7 +621,7 @@ const TRANSLATIONS = {
 
 const getProjects = (isEnglish) => [
   { 
-    title: isEnglish ? "Prediction Markets" : "Spámarkaðir", 
+    title: isEnglish ? "BSc Thesis" : "BSc Lokaritgerð", 
     stack: "Polymarket • Welch's T • Python", 
     desc: isEnglish 
       ? "Quantitative research evaluating the utility of decentralized prediction markets for corporate risk management."
