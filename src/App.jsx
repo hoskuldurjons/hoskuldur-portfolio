@@ -311,7 +311,7 @@ const ProjectDetailModal = ({ project, onClose, isEnglish }) => {
                   <p className="text-[11px] text-slate-400 font-light mt-4 leading-relaxed">
                     {isEnglish 
                       ? "Executive Summary: Rigorous testing confirms predictive calibration with a Brier Score of 0.142. Welch's t-tests establish high statistical significance (p < 0.01) between market implied probabilities and eventual outcomes, proving real-time macro information processing capabilities."
-                      : "Samantekt: Nákvæmar mælingar staðfesta spágildi með Brier Score upp á 0,142. Welch's t-próf sýna fram á mikla tölfræðilega marktækni (p < 0,01) á milli markaðslíkna og raunverulegra útkoma, sem sannar virkni í rauntíma upplýsingaöflun."}
+                      : "Samantekt: Nákvæmar mælingar staðfesta áreiðanleika spálíkansins með Brier Score upp á 0,142. Welch's t-próf sýna fram á mikla tölfræðilega marktækni (p < 0,01) á milli framvirkra markaðslíkna og raunverulegra útkoma, sem sannar virkni í rauntíma upplýsingavinnslu."}
                   </p>
                 </div>
               )}
@@ -406,7 +406,7 @@ const ContactModal = ({ isOpen, onClose, isEnglish }) => {
         setErrors({ general: isEnglish ? "Submission failed. Please copy email directly." : "Sending mistókst. Vinsamlegast afritaðu netfangið." });
       }
     } catch {
-      setErrors({ general: isEnglish ? "Network error. Please copy email directly." : "Nethindrun. Vinsamlegast afritaðu netfangið." });
+      setErrors({ general: isEnglish ? "Network error. Please copy email directly." : "Tengingarvilla. Vinsamlegast afritaðu netfangið." });
     } finally {
       setIsSending(false);
     }
@@ -530,7 +530,7 @@ const ContactModal = ({ isOpen, onClose, isEnglish }) => {
                       transition={{ delay: 0.25 }}
                       className="text-xl font-bold text-white mb-2 font-heading uppercase tracking-tight"
                     >
-                      {isEnglish ? "Transmission Received" : "Sending móttekin"}
+                      {isEnglish ? "Transmission Received" : "Skilaboð móttekin"}
                     </motion.h3>
                     <motion.p 
                       initial={{ y: 10, opacity: 0 }}
@@ -564,26 +564,26 @@ const SectionLabel = ({ children }) => (
 
 const TRANSLATIONS = {
   is: {
-    navStefna: "Stefna",
+    navStefna: "Aðferðafræði",
     navSpamarkadur: "Spámarkaðir",
     navVerkefni: "Verkefni",
-    navFerill: "Ferill",
+    navFerill: "Ferilskrá",
     navContact: "Hafa Samband",
-    heroLabel: "Strategísk gagnagreind",
+    heroLabel: "Stefnumótandi gagnagreind",
     heroTitleFirst: "Höskuldur",
     heroTitleSecond: "Jónsson",
     heroSubtitle: "Notkun gagnadrifinnar líkanagerðar til að greina alþjóðlega áhættu og markaðstækifæri.",
     heroCTAProjects: "Skoða verkefni",
     heroCTAContact: "Hafa samband",
     analysisHeading: "Markaðs- og áhættugreining",
-    analysisP1: "Hagnýting megindlegra aðferða til að greina samspil ólíkra markaðsþátta. Hér sýni ég dæmi um einfalt, gagnadrifið áhættulíkan (Macro Stress Index) sem safnar rauntíma vísbendingum úr þremur áttum—skuldabréfamörkuðum, hrávörum og spámörkuðum. Líkanið nýtir staðlaða vigtun og tölfræðilega samþættingu (Z-scores) til að gefa samsetta vísbendingu um þjóðhagslega óvissu.",
+    analysisP1: "Hagnýting megindlegra aðferða til að greina samspil ólíkra markaðsafla. Í þessum hluta er sýnt dæmi um gagnadrifið áhættulíkan (Macro Stress Index) sem safnar sjálfvirkt rauntímavísum af skuldabréfa-, hrávöru- og spámörkuðum. Með því að nýta staðlaða vigtun og tölfræðilega stöðlun (Z-scores) gefur líkanið samsetta vísbendingu um þjóðhagslegan óstöðugleika",
     scenarioActiveBadge: "SVIÐSMYND VIRK",
-    scenario1Title: "1. PENINGALEG HERÐING",
-    scenario1Desc: "Hröð hækkun stýrivaxta og samdráttur í lausafé til að vinna gegn verðbólgu.",
+    scenario1Title: "1. AÐHALDSSÖM PENINGAMÁLASTEFNA",
+    scenario1Desc: "Hröð hækkun stýrivaxta og samdráttur lausafjár til að vinna gegn verðbólgu.",
     scenario2Title: "2. FRAMBOÐSSKELLUR",
-    scenario2Desc: "Skyndileg truflun á hrávöruflæði og hækkun aðfangaverðs á alþjóðavísu.",
-    scenario3Title: "3. JARÐPÓLITÍSKUR HÁPUNKTUR",
-    scenario3Desc: "Aukin alþjóðleg spenna sem keyrir upp óvissu á spámörkuðum og öruggum höfnum.",
+    scenario2Desc: "Skyndileg truflun á hrávöruflæði sem keyrir upp alþjóðlegan aðfanga- og flutningskostnað.",
+    scenario3Title: "3. HÁPUNKTUR SPENNU Í ALÞJÓÐASTJÓRNMÁLUM",
+    scenario3Desc: "Aukin alþjóðleg spenna sem veldur gríðarlegri óvissu og fjármagnsflæði í öruggar hafnir.",
     projectsHeading: "Verkefni",
     projectsMore: "Skoða nánar",
     ferillHeading: "Ferill",
@@ -609,7 +609,7 @@ const TRANSLATIONS = {
     scenario1Desc: "Rapid interest rate hikes and liquidity contraction to combat stubborn inflation.",
     scenario2Title: "2. SUPPLY-SIDE SHOCK",
     scenario2Desc: "Sudden disruption in commodity flows driving up global input and logistics costs.",
-    scenario3Title: "3. GEOPOLITICAL APEX",
+    scenario3Title: "3. PEAK GEOPOLITICAL TENSION",
     scenario3Desc: "Escalating international tensions driving extreme uncertainty and safe-haven flows.",
     projectsHeading: "Projects",
     projectsMore: "View Details",
@@ -628,33 +628,33 @@ const getProjects = (isEnglish) => [
       : "Megindleg greining sem leggur mat á notagildi dreifstýrðra spámarkaða fyrir áhættustýringu fyrirtækja.", 
     longDesc: isEnglish
       ? "Quantitative analysis evaluating decentralized prediction markets as institutional information infrastructure. The research analyzed 2024 US Presidential Election data on Polymarket to assess information processing efficiency and real-time price discovery."
-      : "Megindleg greining sem leggur mat á dreifstýrða spámarkaði sem lögmæta upplýsingainnviði fyrir stofnanir. Rannsóknin greindi gögn úr forsetakosningum Bandaríkjanna 2024 á Polymarket til að meta upplýsingafjármögnun og rauntíma verðmyndun í íslensku hagkerfi.",
+      : "Megindleg greining sem leggur mat á dreifstýrða spámarkaði sem lögmæta upplýsingainnviði fyrir stofnanir. Rannsóknin greindi gögn úr forsetakosningum Bandaríkjanna 2024 á Polymarket til að meta skilvirkni í upplýsingavinnslu og rauntíma verðmyndun.",
     methodology: isEnglish
       ? "Conducted quantitative research using Python and Pandas to analyze hourly price series and market probabilities. Applied 24-hour rolling volatility metrics and Welch's t-tests to measure price discovery speed."
-      : "Framkvæmdi magnbundna rannsókn með Python og Pandas til að greina klukkustundarverð og markaðslíkur. Beitti 24-stunda flöktmælingum og Welch's t-prófum til að mæla verðmyndun.",
+      : "Framkvæmdi megindlega rannsókn með Python og Pandas til að greina klukkustundarverð og markaðslíkur. Beitti 24-stunda flöktmælingum og Welch's t-prófum til að mæla verðmyndun.",
     insight: isEnglish
       ? "Prediction markets efficiently digest new information and facilitate price discovery under high uncertainty, making them highly accurate instruments for hedging binary risks."
-      : "Spámarkaðir vinna úr nýjum upplýsingum á skilvirkan hátt og auðvelda verðmyndun þar sem óvissan er mest, sem gerir þá að nákvæmu tæki fyrir fyrirtæki til að verja sig gegn tvíundaráhættu.",
+      : "Spámarkaðir vinna úr nýjum upplýsingum á skilvirkan hátt og auðvelda verðmyndun þar sem óvissan er mest, sem gerir þá að nákvæmu tæki fyrir fyrirtæki til að verja sig gegn tvíkosta áhættu.",
     icon: <BarChart3 />,
     hasThesis: true,
     thesisLink: "/prediction-markets-thesis.pdf",
     academicTier: "Bachelor of Science Thesis Paper"
   },
   { 
-    title: isEnglish ? "Blockchain Insurance" : "Blockchain tryggingar", 
+    title: isEnglish ? "Blockchain Insurance" : "Bálkakeðjutryggingar", 
     stack: "Meta-Analysis • DeFi • Smart Contracts", 
     desc: isEnglish
       ? "Academic analysis of decentralized finance (DeFi) emergence and its disruptive impact on traditional insurance markets."
       : "Fræðileg greining á tilkomu dreifstýrðra fjármála (DeFi) og truflandi áhrifum þeirra á hefðbundna tryggingamarkaði.", 
     longDesc: isEnglish
       ? "A comprehensive meta-study exploring how decentralized finance and blockchain technology redefine risk management. It evaluates the shift from traditional centralized insurance models to autonomous smart-contract-driven solutions."
-      : "Yfirgripsmikið verkefni sem kannar hvernig dreifstýrð fjármál og blockchain-tækni eru að endurskilgreina áhættustýringu. Verkefnið leggur mat á breytinguna frá hefðbundnum, miðstýrðum tryggingalíkönum yfir í sjálfvirkar lausnir byggðar á snjallsamningum.",
+      : "Yfirgripsmikil samantektargreining sem kannar hvernig dreifstýrð fjármál og blockchain-tækni eru að endurskilgreina áhættustýringu. Verkefnið leggur mat á breytinguna frá hefðbundnum, miðstýrðum tryggingalíkönum yfir í sjálfvirkar lausnir byggðar á snjallsamningum.",
     methodology: isEnglish
       ? "Conducted a meta-analysis across four large-scale quantitative studies (NYDIG, Deloitte, Quinnipiac, Intertrust) comparing executive sentiment to real-world integration. Features a targeted SWOT analysis for Icelandic businesses."
-      : "Framkvæmdi meta-greiningu á fjórum stórum megindlegum rannsóknum (NYDIG, Deloitte, Quinnipiac, Intertrust) sem bera saman viðhorf stjórnenda við raunverulega innleiðingu. Inniheldur sértæka SVÓT-greiningu fyrir íslensk fyrirtæki.",
+      : "Framkvæmdi samantektargreiningu (meta-analysis) á fjórum stórum megindlegum rannsóknum (NYDIG, Deloitte, Quinnipiac, Intertrust) sem bera saman viðhorf stjórnenda við raunverulega innleiðingu. Inniheldur sértæka SVÓT-greiningu fyrir íslensk fyrirtæki.",
     insight: isEnglish
       ? "Decentralized protocols bypass traditional administrative overhead, lowering costs and capturing untapped market segments through democratic smart contracts."
-      : "Dreifstýrðar samskiptareglur geta farið fram hjá hefðbundnum stjórnsýsluhindrunum, lækkað kostnað og nýtt ósnortna markaði með lýðræðislegum snjallsamningum.",
+      : "Dreifstýrð kerfi geta farið fram hjá hefðbundnum umsýslukostnaði, lækkað kostnað og nýtt ósnortna markaði með lýðræðislegum snjallsamningum.",
     icon: <ShieldCheck />,
     hasThesis: false
   },
@@ -666,28 +666,28 @@ const getProjects = (isEnglish) => [
       : "Greining á framboðshlið og takmörkunum í gistigeiranum í Seattle.", 
     longDesc: isEnglish
       ? "A business intelligence project demonstrating the correlation between zoning regulations, supply limits, and dynamic pricing structures in the Seattle short-term rental market."
-      : "Viðskiptagreindarverkefni sem sýnir fylgni milli deiliskipulags, framboðstakmarkana og dýnamískrar verðlagningar á skammtímaleigumarkaði í Seattle.",
+      : "Viðskiptagreindarverkefni sem sýnir fylgni milli deiliskipulags, framboðstakmarkana og sveigjanlegrar verðlagningar á skammtímaleigumarkaði í Seattle.",
     methodology: isEnglish
       ? "Integrated multiple datasets in Tableau to build granular heatmaps and interactive price volatility dashboards tailored for real estate investors."
       : "Samþætti mörg gagnasöfn í Tableau til að búa til hitakort og mælaborð fyrir verðsveiflur, ætlað fasteignafjárfestum.",
     insight: isEnglish
       ? "Identified a 12% price premium in neighborhoods where supply elasticity is highly constrained by local regulatory barriers."
-      : "Greindi 12% verðálag í hverfum þar sem framboðshliðin mætir verulegum reglugerðarhindrunum.",
+      : "Greindi 12% verðálag í hverfum þar sem framboðsteygni mætir verulegum reglugerðarhindrunum.",
     icon: <Database />,
     hasThesis: false
   },
   { 
-    title: isEnglish ? "SQL Data Engineering" : "SQL Gagnavinnsla", 
+    title: isEnglish ? "SQL Data Analysis" : "SQL Gagnavinnsla", 
     stack: "SQL Server • Window Functions", 
     desc: isEnglish
       ? "ETL pipeline development for large-scale healthcare and macroeconomic datasets."
       : "ETL vinnsla á stórum heilbrigðis- og efnahagsgagnasöfnum.", 
     longDesc: isEnglish
       ? "Advanced ETL pipelines and exploratory data analysis on massive databases to identify correlations between regional public health trends and localized economic volatility."
-      : "Háþróuð ETL vinnsla og gagna könnun á gríðarstórum gagnasöfnum til að greina fylgni milli svæðisbundinna heilbrigðisstrauma og staðbundins efnahagslegs óstöðugleika.",
+      : "Háþróuð ETL vinnsla og gagnakönnun á gríðarstórum gagnasöfnum til að greina fylgni milli svæðisbundinna heilbrigðisstrauma og staðbundins efnahagslegs óstöðugleika.",
     methodology: isEnglish
       ? "Designed complex SQL queries employing window functions, CTEs, and index tuning to process over 2 million records from a health sector database."
-      : "Hannaði flóknar SQL fyrirspurnir með Window Functions og CTEs til að vinna yfir 2 milljónir færslna úr heilbrigðisgagnagrunni.",
+      : "Hannaði flóknar SQL fyrirspurnir með Window Functions og CTEs og fínstillingar vísa (index tuning) til að vinna yfir 2 milljónir færslna úr heilbrigðisgagnagrunni.",
     insight: isEnglish
       ? "Fluctuations in healthcare expenditures were identified as a statistically significant leading indicator of local job market contractions."
       : "Sveiflur í útgjöldum til heilbrigðismála reyndust vera leiðandi vísbending um samdrátt á staðbundnum vinnumarkaði.",
@@ -697,10 +697,10 @@ const getProjects = (isEnglish) => [
 ];
 
 const getCareer = (isEnglish) => [
-  { period: "2023 — 2026", title: isEnglish ? "Managing Director" : "Framkvæmdastjóri", org: "CIN CIN ehf.", desc: isEnglish ? "Designed inventory replenishment models and built interactive Power BI frameworks to support operational efficiency." : "Hannaði birgðalíkön og Power BI umgjörð fyrir rekstrarstöðugleika." },
-  { period: "2022 — 2023", title: isEnglish ? "Operations and Marketing" : "Rekstur og markaðssetning", org: "Tíu Vín", desc: isEnglish ? "Analyzed digital marketing ROI, optimizing ad-spend through Power BI and custom Google Analytics attribution models." : "Arðsemisgreining stafrænnar markaðssetningar með Power BI og Google Analytics." },
-  { period: "2021", title: isEnglish ? "Marketing Assistant" : "Aðstoðarmaður markaðsstjóra", org: "Deloitte", desc: isEnglish ? "Conducted macro market trend analysis and prepared briefs for executive leadership presentations." : "Greining á markaðsþróun og gerð stefnumótandi efnis fyrir stjórnendaskýrslur." },
-  { period: "2026", title: isEnglish ? "BSc in Business with an emphasis on Business Intelligence" : "BSc í Viðskiptafræði með áherslu á viðskiptagreind", org: "Háskólinn á Bifröst", desc: isEnglish ? "Thesis: Evaluating the utility of prediction markets for institutional intelligence gathering and corporate risk management." : "Ritgerð: Greining á notagildi spámarkaða fyrir upplýsingaöflun stofnana og áhættustýringu." }
+  { period: "2023 — 2026", title: isEnglish ? "Managing Director" : "Framkvæmdastjóri", org: "CIN CIN ehf.", desc: isEnglish ? "Designed inventory replenishment models and built interactive Power BI frameworks to support operational efficiency." : "Hannaði birgðalíkön og gagnvirk Power BI mælaborð til að auka skilvirkni í rekstri." },
+  { period: "2022 — 2023", title: isEnglish ? "Operations and Marketing" : "Rekstur og markaðssetning", org: "Tíu Vín", desc: isEnglish ? "Analyzed digital marketing ROI, optimizing ad-spend through Power BI and custom Google Analytics attribution models." : "Greindi arðsemi stafrænnar markaðssetningar og hámarkaði auglýsingaskilvirkni." },
+  { period: "2021", title: isEnglish ? "Marketing Assistant" : "Aðstoðarmaður á markaðssviði", org: "Deloitte", desc: isEnglish ? "Conducted macro market trend analysis and prepared briefs for executive leadership presentations." : "Greining á markaðsþróun og útbjó samantektir fyrir stjórnendaskýrslur." },
+  { period: "2026", title: isEnglish ? "BSc in Business with an emphasis on Business Intelligence" : "BSc í Viðskiptafræði með áherslu á viðskiptagreind", org: "Háskólinn á Bifröst", desc: isEnglish ? "Thesis: Evaluating the utility of prediction markets for institutional intelligence gathering and corporate risk management." : "Lokaritgerð: Greining á notagildi spámarkaða fyrir upplýsingaöflun stofnana og áhættustýringu." }
 ];
 
 export default function App() {
