@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sliders, Activity, Info, BookOpen, ShieldAlert, ChevronDown, ChevronUp, RefreshCw, TrendingUp, Zap, Terminal } from 'lucide-react';
+import { Sliders, Activity, Info, BookOpen, ShieldAlert, ChevronDown, ChevronUp, RefreshCw, TrendingUp, Zap, Terminal, ShieldCheck, Sparkles, ArrowRightLeft, AlertTriangle } from 'lucide-react';
 
 const LOCAL_TRANSLATIONS = {
   is: {
@@ -27,11 +27,19 @@ const LOCAL_TRANSLATIONS = {
     polyTab: "SPÁMARKAÐIR",
     scenarioActiveBadge: "SVIÐSMYND VIRK",
     scenario1Title: "1. PENINGALEG HERÐING",
-    scenario1Desc: "Hröð hækkun stýrivaxta og samdráttur í lausafé til að vinna gegn verðbólgu.",
+    scenario1Desc: "Hröð hækkun stýrivaxta og samdráttur í lausafé til að vinna gegn þrálátri verðbólgu.",
     scenario2Title: "2. FRAMBOÐSSKELLUR",
-    scenario2Desc: "Skyndileg truflun á hrávöruflæði og hækkun aðfangaverðs á alþjóðavísu.",
-    scenario3Title: "3. JARÐPÓLITÍSKUR HÁPUNKTUR",
-    scenario3Desc: "Aukin alþjóðleg spenna sem keyrir upp óvissu á spámörkuðum og flótta í öruggar hafnir."
+    scenario2Desc: "Skyndileg truflun á hrávöruflæði sem hækkar aðfanga- og flutningskostnað á alþjóðavísu.",
+    scenario3Title: "3. JAFNVÆGISLEYSI Í ALÞJÓÐASTJÓRNMÁLUM",
+    scenario3Desc: "Aukin alþjóðleg spenna sem veldur mikilli óvissu og fjármagnsflótta í öruggar hafnir.",
+    scenario4Title: "4. MIKIÐ JAFNVÆGI",
+    scenario4Desc: "Stöðugur hagvöxtur, lág verðbólga og lágt lánshæfisálag á mörkuðum.",
+    scenario5Title: "5. TÆKNI-ÆÐI",
+    scenario5Desc: "Gríðarlegt fjármagnsflæði í tækninýjungar sem keyrir upp bjartsýni á mörkuðum.",
+    scenario6Title: "6. FLÓTTI FJÁRMAGNS",
+    scenario6Desc: "Skyndilegur flótti fjármagns úr áhættusömum eignum yfir í öruggar hafnir.",
+    scenario7Title: "7. KREPPUVERÐBÓLGA",
+    scenario7Desc: "Stöðnun í hagkerfinu samfara þrálátri verðbólgu og háum aðfangakostnaði."
   },
   en: {
     headerLabel: "Systemic Risk // Real-Time Modeling",
@@ -61,7 +69,15 @@ const LOCAL_TRANSLATIONS = {
     scenario2Title: "2. SUPPLY-SIDE SHOCK",
     scenario2Desc: "Sudden disruption in commodity flows driving up global input and logistics costs.",
     scenario3Title: "3. GEOPOLITICAL APEX",
-    scenario3Desc: "Escalating international tensions driving extreme uncertainty and safe-haven flows."
+    scenario3Desc: "Escalating international tensions driving extreme uncertainty and safe-haven flows.",
+    scenario4Title: "4. GREAT MODERATION",
+    scenario4Desc: "Low inflation, steady growth, and highly compressed default premiums.",
+    scenario5Title: "5. TECH EUPHORIA",
+    scenario5Desc: "Extreme capital flows into tech innovation driving highly elevated market sentiment.",
+    scenario6Title: "6. CAPITAL FLIGHT",
+    scenario6Desc: "Sudden reallocation of global capital out of emerging risk assets into safe-havens.",
+    scenario7Title: "7. STAGFLATION",
+    scenario7Desc: "Stagnant economic output combined with persistent inflation and elevated input costs."
   }
 };
 
@@ -168,6 +184,54 @@ export default function AnalysisWorkspace({
         setPolymarketSpread(90);
         setActiveScenario('geopolitical');
       }
+    },
+    {
+      id: 'moderation',
+      title: t.scenario4Title,
+      desc: t.scenario4Desc,
+      icon: ShieldCheck,
+      action: () => {
+        setBondSpread(1.0);
+        setCommodityVol(15);
+        setPolymarketSpread(10);
+        setActiveScenario('moderation');
+      }
+    },
+    {
+      id: 'euphoria',
+      title: t.scenario5Title,
+      desc: t.scenario5Desc,
+      icon: Sparkles,
+      action: () => {
+        setBondSpread(1.6);
+        setCommodityVol(30);
+        setPolymarketSpread(85);
+        setActiveScenario('euphoria');
+      }
+    },
+    {
+      id: 'flight',
+      title: t.scenario6Title,
+      desc: t.scenario6Desc,
+      icon: ArrowRightLeft,
+      action: () => {
+        setBondSpread(3.4);
+        setCommodityVol(20);
+        setPolymarketSpread(55);
+        setActiveScenario('flight');
+      }
+    },
+    {
+      id: 'stagflation',
+      title: t.scenario7Title,
+      desc: t.scenario7Desc,
+      icon: AlertTriangle,
+      action: () => {
+        setBondSpread(3.2);
+        setCommodityVol(75);
+        setPolymarketSpread(60);
+        setActiveScenario('stagflation');
+      }
     }
   ];
 
@@ -179,12 +243,12 @@ export default function AnalysisWorkspace({
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/1 rounded-full blur-[80px] pointer-events-none" />
 
       {/* 1. Left Command Strip Sidebar */}
-      <div className="w-full md:w-48 bg-slate-950/60 border-b md:border-b-0 md:border-r border-white/5 p-4 flex flex-col justify-between gap-3 flex-shrink-0 relative z-10 select-none">
-        <div className="flex flex-col gap-2.5">
-          <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
+      <div className="w-full md:w-48 bg-slate-950/60 border-b md:border-b-0 md:border-r border-white/5 p-3 flex flex-col justify-between gap-2.5 flex-shrink-0 relative z-10 select-none">
+        <div className="flex flex-col gap-2">
+          <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest font-bold mb-0.5 flex items-center gap-1">
             <Activity size={10} className="text-emerald-500" /> {isEnglish ? "Scenario Engine" : "Sviðsmyndir"}
           </span>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1.5">
             {scenarios.map((sc) => {
               const IconComponent = sc.icon;
               const isActive = activeScenario === sc.id;
@@ -192,7 +256,7 @@ export default function AnalysisWorkspace({
                 <button
                   key={sc.id}
                   onClick={sc.action}
-                  className={`w-full p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden select-none cursor-pointer flex items-center gap-2.5 ${
+                  className={`w-full p-2 rounded-xl border text-left transition-all duration-300 relative overflow-hidden select-none cursor-pointer flex items-center gap-2 ${
                     isActive 
                       ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' 
                       : 'bg-slate-900/40 border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/[0.03]'
@@ -213,7 +277,7 @@ export default function AnalysisWorkspace({
         {/* Master Sync Reset at bottom of Sidebar */}
         <button
           onClick={handleSyncLiveData}
-          className={`w-full text-[10px] font-mono flex items-center justify-center gap-1.5 transition-all select-none cursor-pointer p-2.5 rounded border shadow-md active:scale-95 ${
+          className={`w-full text-[10px] font-mono flex items-center justify-center gap-1.5 transition-all select-none cursor-pointer p-2 rounded border shadow-md active:scale-95 ${
             isSynced 
               ? "bg-emerald-500/20 border-emerald-400 text-emerald-300 font-bold" 
               : "text-emerald-400 hover:text-emerald-300 bg-emerald-500/5 hover:bg-emerald-500/10 border-emerald-500/20"
@@ -257,9 +321,7 @@ export default function AnalysisWorkspace({
                     {t.scenarioActiveBadge}
                   </span>
                   <span>
-                    {activeScenario === 'monetary' && t.scenario1Desc}
-                    {activeScenario === 'supply' && t.scenario2Desc}
-                    {activeScenario === 'geopolitical' && t.scenario3Desc}
+                    {scenarios.find(s => s.id === activeScenario)?.desc}
                   </span>
                 </motion.div>
               ) : (
