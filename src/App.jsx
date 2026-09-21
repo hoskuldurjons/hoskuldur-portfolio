@@ -257,7 +257,10 @@ const ProjectDetailModal = ({ project, onClose, isEnglish }) => {
                     </span>
                   )}
                 </div>
-                <h3 className="text-3xl font-bold text-white font-heading uppercase tracking-tight">{project.title}</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-white font-heading uppercase tracking-tight">{project.title}</h3>
+                {project.advisor && (
+                  <p className="text-xs font-mono text-emerald-400 font-semibold tracking-wide pt-1">{project.advisor}</p>
+                )}
               </div>
             </div>
 
@@ -297,33 +300,32 @@ const ProjectDetailModal = ({ project, onClose, isEnglish }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-center">
                     <div className="p-3 bg-slate-900/60 rounded-lg border border-white/5">
                       <span className="text-[9px] text-slate-500 block mb-1 uppercase tracking-wider">Brier Score</span>
-                      <span className="text-white font-bold text-sm">0.142 (Optimal)</span>
+                      <span className="text-white font-bold text-sm">0.08–0.12 (Optimal)</span>
                     </div>
                     <div className="p-3 bg-slate-900/60 rounded-lg border border-white/5">
-                      <span className="text-[9px] text-slate-500 block mb-1 uppercase tracking-wider">Welch's T-Test</span>
-                      <span className="text-white font-bold text-sm">p &lt; 0.01 (Sig)</span>
+                      <span className="text-[9px] text-slate-500 block mb-1 uppercase tracking-wider">{isEnglish ? "Architecture" : "Innviðir"}</span>
+                      <span className="text-white font-bold text-sm">Hybrid CLOB + UMA</span>
                     </div>
                     <div className="p-3 bg-slate-900/60 rounded-lg border border-white/5">
-                      <span className="text-[9px] text-slate-500 block mb-1 uppercase tracking-wider">Latency Limit</span>
-                      <span className="text-white font-bold text-sm">&lt; 3.6 Hours</span>
+                      <span className="text-[9px] text-slate-500 block mb-1 uppercase tracking-wider">{isEnglish ? "Execution" : "Viðbragð"}</span>
+                      <span className="text-white font-bold text-sm">&lt; Seconds (Real-time)</span>
                     </div>
                   </div>
                   <p className="text-[11px] text-slate-400 font-light mt-4 leading-relaxed">
-                    {isEnglish 
-                      ? "Executive Summary: Rigorous testing confirms predictive calibration with a Brier Score of 0.142. Welch's t-tests establish high statistical significance (p < 0.01) between market implied probabilities and eventual outcomes, proving real-time macro information processing capabilities."
-                      : "Samantekt: Nákvæmar mælingar staðfesta áreiðanleika spálíkansins með Brier Score upp á 0,142. Welch's t-próf sýna fram á mikla tölfræðilega marktækni (p < 0,01) á milli framvirkra markaðslíkna og raunverulegra útkoma, sem sannar virkni í rauntíma upplýsingavinnslu."}
+                    <strong className="text-slate-300 font-medium block mb-1">{isEnglish ? "Summary:" : "Samantekt:"}</strong>
+                    {project.summary}
                   </p>
                 </div>
               )}
             </div>
 
             <div className="mt-12 flex gap-4">
-              {project.hasThesis && (
+              {(project.hasThesis || project.hasPaper) && (
                 <button 
-                  onClick={() => window.open(project.thesisLink || "/prediction-markets-thesis.pdf", "_blank")}
+                  onClick={() => window.open(project.thesisLink || project.paperLink || "/assets/docs/BSc_Hoskuldur_Jonsson_2026.pdf", "_blank")}
                   className="flex-1 bg-emerald-500 text-black font-bold p-4 rounded-xl flex items-center justify-center gap-2 hover:bg-emerald-400 transition-all uppercase text-xs tracking-widest font-heading"
                 >
-                  {isEnglish ? "View Research" : "Skoða rannsókn"} <FileText size={16} />
+                  {isEnglish ? (project.paperLabel || "View Research") : (project.paperLabel || "Skoða rannsókn")} <FileText size={16} />
                 </button>
               )}
               <button onClick={onClose} className="px-8 border border-white/10 text-white font-bold rounded-xl uppercase text-xs tracking-widest font-heading hover:bg-white/5 transition-all">
@@ -565,14 +567,13 @@ const SectionLabel = ({ children }) => (
 const TRANSLATIONS = {
   is: {
     navStefna: "Aðferðafræði",
-    navSpamarkadur: "Spámarkaðir",
     navVerkefni: "Verkefni",
     navFerill: "Ferilskrá",
     navContact: "Hafa Samband",
     heroLabel: "Stefnumótandi gagnagreind",
     heroTitleFirst: "Höskuldur",
     heroTitleSecond: "Jónsson",
-    heroSubtitle: "Notkun gagnadrifinnar líkanagerðar til að greina alþjóðlega áhættu og markaðstækifæri.",
+    heroSubtitle: "Brúa bilið milli stjórnunar og tæknilegrar útfærslu – frá stefnumótandi rekstri og viðskiptagreind til magnbundinnar líkanagerðar og hugbúnaðarþróunar.",
     heroCTAProjects: "Skoða verkefni",
     heroCTAContact: "Hafa samband",
     analysisHeading: "Markaðs- og áhættugreining",
@@ -592,14 +593,13 @@ const TRANSLATIONS = {
   },
   en: {
     navStefna: "Methodology",
-    navSpamarkadur: "Prediction Terminal",
     navVerkefni: "Projects",
     navFerill: "Career Path",
     navContact: "Contact Me",
     heroLabel: "Strategic Data Intelligence",
     heroTitleFirst: "Höskuldur",
     heroTitleSecond: "Jónsson",
-    heroSubtitle: "Leveraging data-driven modeling to analyze global risks and market opportunities.",
+    heroSubtitle: "Bridging executive leadership and technical execution – combining commercial acumen with quantitative modeling, business intelligence, and full-stack systems engineering.",
     heroCTAProjects: "View Projects",
     heroCTAContact: "Contact Me",
     analysisHeading: "Market & Risk Analysis",
@@ -621,23 +621,34 @@ const TRANSLATIONS = {
 
 const getProjects = (isEnglish) => [
   { 
-    title: isEnglish ? "BSc Thesis" : "BSc Lokaritgerð", 
-    stack: "Polymarket • Welch's T • Python", 
+    title: isEnglish 
+      ? "Prediction Markets in the Blockchain Era: Information Aggregation, Market Design, and the Mainstream Emergence of Polymarket" 
+      : "Spámarkaðir á tímum bálkakeðjunnar: Upplýsingasöfnun, markaðshönnun og innreið Polymarket á almennan markað", 
+    cardTitle: isEnglish 
+      ? "Prediction Markets in the Blockchain Era" 
+      : "Spámarkaðir á tímum bálkakeðjunnar", 
+    advisor: isEnglish 
+      ? "Advisor: Húni Jóhannesson" 
+      : "Leiðbeinandi: Húni Jóhannesson", 
+    stack: "Polymarket • Gnosis CTF • UMA Oracle • Hybrid CLOB", 
     desc: isEnglish 
-      ? "Quantitative research evaluating the utility of decentralized prediction markets for corporate risk management."
-      : "Megindleg greining sem leggur mat á notagildi dreifstýrðra spámarkaða fyrir áhættustýringu fyrirtækja.", 
+      ? "A comprehensive analysis of decentralized prediction markets, evaluating market microstructure, oracle mechanisms, forecasting accuracy (Brier scores), and regulatory dynamics."
+      : "Rannsókn á fræðilegum undirstöðum, markaðshönnun og innviðum spámarkaða með áherslu á Polymarket. Fjallar um upplýsingasöfnun, Brier-stig, lausafjárfyrirkomulag (CLOB), véfréttir (UMA) og regluverk.", 
+    summary: isEnglish
+      ? "A comprehensive analysis of decentralized prediction markets, evaluating market microstructure, oracle mechanisms, forecasting accuracy (Brier scores), and regulatory dynamics."
+      : "Rannsókn á fræðilegum undirstöðum, markaðshönnun og innviðum spámarkaða með áherslu á Polymarket. Fjallar um upplýsingasöfnun, Brier-stig, lausafjárfyrirkomulag (CLOB), véfréttir (UMA) og regluverk.",
     longDesc: isEnglish
-      ? "Quantitative analysis evaluating decentralized prediction markets as institutional information infrastructure. The research analyzed 2024 US Presidential Election data on Polymarket to assess information processing efficiency and real-time price discovery."
-      : "Megindleg greining sem leggur mat á dreifstýrða spámarkaði sem lögmæta upplýsingainnviði fyrir stofnanir. Rannsóknin greindi gögn úr forsetakosningum Bandaríkjanna 2024 á Polymarket til að meta skilvirkni í upplýsingavinnslu og rauntíma verðmyndun.",
+      ? "A comprehensive analysis of decentralized prediction markets, evaluating market microstructure, oracle mechanisms, forecasting accuracy (Brier scores), and regulatory dynamics."
+      : "Rannsókn á fræðilegum undirstöðum, markaðshönnun og innviðum spámarkaða með áherslu á Polymarket. Fjallar um upplýsingasöfnun, Brier-stig, lausafjárfyrirkomulag (CLOB), véfréttir (UMA) og regluverk.",
     methodology: isEnglish
-      ? "Conducted quantitative research using Python and Pandas to analyze hourly price series and market probabilities. Applied 24-hour rolling volatility metrics and Welch's t-tests to measure price discovery speed."
-      : "Framkvæmdi megindlega rannsókn með Python og Pandas til að greina klukkustundarverð og markaðslíkur. Beitti 24-stunda flöktmælingum og Welch's t-prófum til að mæla verðmyndun.",
+      ? "Qualitative systems analysis and interdisciplinary literature review across financial economics, market microstructure (Hybrid CLOB, LMSR), blockchain protocols (ERC-1155 CTF), and regulatory frameworks (CFTC v. Kalshi)."
+      : "Eigindleg kerfisgreining og þverfagleg fræðileg samantekt úr fjármálahagfræði, markaðsörbyggingu (Hybrid CLOB, LMSR), bálkakeðjuinnviðum (ERC-1155 CTF) og regluverki (CFTC og Kalshi dómsmálið).",
     insight: isEnglish
-      ? "Prediction markets efficiently digest new information and facilitate price discovery under high uncertainty, making them highly accurate instruments for hedging binary risks."
-      : "Spámarkaðir vinna úr nýjum upplýsingum á skilvirkan hátt og auðvelda verðmyndun þar sem óvissan er mest, sem gerir þá að nákvæmu tæki fyrir fyrirtæki til að verja sig gegn tvíkosta áhættu.",
+      ? "By enforcing 'skin in the game' and leveraging Hayek's price mechanism, prediction markets achieve superior calibration and lower Brier scores than traditional polls, overcoming historic bottlenecks via layer-2 scaling and optimistic oracles."
+      : "Með því að krefjast raunverulegra fjárhagslegra hagsmuna ('skin in the game') og nýta verðkerfið í anda Hayek ná spámarkaðir framúrskarandi nákvæmni og lægri Brier-stigum en hefðbundnar kannanir, þar sem L2-lausnir og bjartsýnisvéfréttir leysa eldri flöskuhálsa.",
     icon: <BarChart3 />,
     hasThesis: true,
-    thesisLink: "/prediction-markets-thesis.pdf",
+    thesisLink: "/assets/docs/BSc_Hoskuldur_Jonsson_2026.pdf",
     academicTier: "Bachelor of Science Thesis Paper"
   },
   { 
@@ -656,7 +667,10 @@ const getProjects = (isEnglish) => [
       ? "Decentralized protocols bypass traditional administrative overhead, lowering costs and capturing untapped market segments through democratic smart contracts."
       : "Dreifstýrð kerfi geta farið fram hjá hefðbundnum umsýslukostnaði, lækkað kostnað og nýtt ósnortna markaði með lýðræðislegum snjallsamningum.",
     icon: <ShieldCheck />,
-    hasThesis: false
+    hasThesis: false,
+    hasPaper: true,
+    paperLink: "/blockchain-insurance-project.pdf",
+    paperLabel: isEnglish ? "View Research Paper" : "Skoða rannsókn"
   },
   { 
     title: isEnglish ? "Data Visualization" : "Myndræn framsetning", 
@@ -697,10 +711,38 @@ const getProjects = (isEnglish) => [
 ];
 
 const getCareer = (isEnglish) => [
-  { period: "2023 — 2026", title: isEnglish ? "Managing Director" : "Framkvæmdastjóri", org: "CIN CIN ehf.", desc: isEnglish ? "Designed inventory replenishment models and built interactive Power BI frameworks to support operational efficiency." : "Hannaði birgðalíkön og gagnvirk Power BI mælaborð til að auka skilvirkni í rekstri." },
-  { period: "2022 — 2023", title: isEnglish ? "Operations and Marketing" : "Rekstur og markaðssetning", org: "Tíu Vín", desc: isEnglish ? "Analyzed digital marketing ROI, optimizing ad-spend through Power BI and custom Google Analytics attribution models." : "Greindi arðsemi stafrænnar markaðssetningar og hámarkaði auglýsingaskilvirkni." },
-  { period: "2021", title: isEnglish ? "Marketing Assistant" : "Aðstoðarmaður á markaðssviði", org: "Deloitte", desc: isEnglish ? "Conducted macro market trend analysis and prepared briefs for executive leadership presentations." : "Greining á markaðsþróun og útbjó samantektir fyrir stjórnendaskýrslur." },
-  { period: "2026", title: isEnglish ? "BSc in Business with an emphasis on Business Intelligence" : "BSc í Viðskiptafræði með áherslu á viðskiptagreind", org: "Háskólinn á Bifröst", desc: isEnglish ? "Thesis: Evaluating the utility of prediction markets for institutional intelligence gathering and corporate risk management." : "Lokaritgerð: Greining á notagildi spámarkaða fyrir upplýsingaöflun stofnana og áhættustýringu." }
+  { 
+    period: "2023 — 2026", 
+    title: isEnglish ? "Managing Director" : "Framkvæmdastjóri", 
+    org: "CIN CIN ehf.", 
+    desc: isEnglish 
+      ? "Led corporate operations as Managing Director; engineered automated replenishment models and interactive Power BI architectures optimizing capital efficiency." 
+      : "Leiddi rekstur sem framkvæmdastjóri; þróaði sjálfvirk birgðalíkön og gagnvirk Power BI mælaborð sem hámarkaði veltuhraða fjármagns og rekstrarhagkvæmni." 
+  },
+  { 
+    period: "2022 — 2023", 
+    title: isEnglish ? "Operations and Marketing" : "Rekstur og markaðssetning", 
+    org: "Tíu Vín", 
+    desc: isEnglish 
+      ? "Architected digital marketing ROI and attribution models in Power BI and Google Analytics, directly scaling conversion efficiency." 
+      : "Hannaði sérsniðin greiningarlíkön í Power BI og Google Analytics til að hámarka arðsemi markaðsfjárfestinga (ROAS) og stafræna sölu." 
+  },
+  { 
+    period: "2021", 
+    title: isEnglish ? "Marketing Assistant" : "Aðstoðarmaður á markaðssviði", 
+    org: "Deloitte", 
+    desc: isEnglish 
+      ? "Conducted macroeconomic market and industry trend analyses to inform executive advisory briefings." 
+      : "Framkvæmdi greiningu á alþjóðlegri markaðs- og atvinnugreinaþróun fyrir stjórnendaskýrslur og stefnumótandi ákvarðanatöku." 
+  },
+  { 
+    period: "", 
+    title: isEnglish ? "BSc in Business Administration (Business Intelligence)" : "BSc í viðskiptafræði með áherslu á viðskiptagreind", 
+    org: isEnglish ? "Bifröst University" : "Háskólinn á Bifröst", 
+    desc: isEnglish 
+      ? "Thesis: Prediction Markets in the Blockchain Era: Information Aggregation, Market Design, and the Mainstream Emergence of Polymarket (Advisor: Húni Jóhannesson)." 
+      : "Lokaritgerð: Spámarkaðir á tímum bálkakeðjunnar: Upplýsingasöfnun, markaðshönnun og innreið Polymarket á almennan markað (Leiðbeinandi: Húni Jóhannesson)." 
+  }
 ];
 
 export default function App() {
@@ -717,6 +759,49 @@ export default function App() {
   const projects = getProjects(isEnglish);
   const careerExperiences = getCareer(isEnglish);
   const t = isEnglish ? TRANSLATIONS.en : TRANSLATIONS.is;
+
+  // Dynamic SEO, Title, Meta, and HTML Lang Synchronization
+  useEffect(() => {
+    const metaTitle = isEnglish 
+      ? "Höskuldur Jónsson | Business Intelligence, Quantitative Modeling & Systems Engineering"
+      : "Höskuldur Jónsson | Viðskiptagreind, megindleg líkön og kerfaþróun";
+    
+    const metaDesc = isEnglish
+      ? "Portfolio and CV of Höskuldur Jónsson – Bridging executive management, business intelligence, and end-to-end quantitative systems engineering."
+      : "Vefur og ferilskrá Höskuldar Jónssonar – Samþætting rekstrarstjórnunar, viðskiptagreindar og hagnýtrar þróunar megindlegra greiningarkerfa.";
+
+    const ogTitle = isEnglish
+      ? "Höskuldur Jónsson | Projects & Career Path"
+      : "Höskuldur Jónsson | Verkefni & Ferilskrá";
+
+    const ogDesc = isEnglish
+      ? "Interactive prediction market terminal, macroeconomic stress models, blockchain research, and data-driven solutions."
+      : "Gagnvirkt spámarkaðs-terminal, makróáhættulíkön, rannsóknir á bálkakeðjum og gagnadrifnar lausnir.";
+
+    document.title = metaTitle;
+    document.documentElement.lang = isEnglish ? "en" : "is";
+
+    const updateMeta = (selector, content) => {
+      let el = document.querySelector(selector);
+      if (!el) {
+        el = document.createElement("meta");
+        if (selector.startsWith('meta[name="')) {
+          el.setAttribute("name", selector.slice(11, -2));
+        } else if (selector.startsWith('meta[property="')) {
+          el.setAttribute("property", selector.slice(15, -2));
+        }
+        document.head.appendChild(el);
+      }
+      el.setAttribute("content", content);
+    };
+
+    updateMeta('meta[name="description"]', metaDesc);
+    updateMeta('meta[property="og:title"]', ogTitle);
+    updateMeta('meta[property="og:description"]', ogDesc);
+    updateMeta('meta[property="og:locale"]', isEnglish ? "en_US" : "is_IS");
+    updateMeta('meta[name="twitter:title"]', ogTitle);
+    updateMeta('meta[name="twitter:description"]', ogDesc);
+  }, [isEnglish]);
 
   // Favicon Injection Logic
   useEffect(() => {
@@ -759,7 +844,6 @@ export default function App() {
           </div>
           <div className="hidden md:flex gap-2 items-center font-mono">
             <NavLink onClick={() => scrollTo('stefna')}>{t.navStefna}</NavLink>
-            <NavLink onClick={() => scrollTo('spamarkadur')}>{t.navSpamarkadur}</NavLink>
             <NavLink onClick={() => scrollTo('verkefni')}>{t.navVerkefni}</NavLink>
             <NavLink onClick={() => scrollTo('ferill')}>{t.navFerill}</NavLink>
             
@@ -883,7 +967,7 @@ export default function App() {
                   <div className="mb-8 p-4 bg-emerald-500/5 rounded-xl w-fit group-hover:bg-emerald-500 group-hover:text-black transition-all">
                     {React.cloneElement(p.icon, { size: 24, className: "text-emerald-400 group-hover:text-black" })}
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-3 font-heading uppercase tracking-tight">{p.title}</h3>
+                  <h3 className="text-lg font-bold text-white mb-3 font-heading uppercase tracking-tight">{p.cardTitle || p.title}</h3>
                   <p className="text-emerald-400 text-[10px] font-mono mb-5 uppercase tracking-widest">{p.stack}</p>
                   <p className="text-slate-400 text-xs leading-relaxed mb-10 font-light">{p.desc}</p>
                 </div>
@@ -903,7 +987,9 @@ export default function App() {
               <div key={idx} className="relative pl-10 border-l border-white/5">
                 <div className="absolute left-[-1px] top-0 w-[2px] h-full bg-gradient-to-b from-emerald-500 to-transparent opacity-40"></div>
                 <div className="absolute left-[-4px] top-0 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
-                <span className="text-emerald-500 font-mono text-[10px] uppercase tracking-widest mb-3 block">{item.period}</span>
+                {item.period && (
+                  <span className="text-emerald-500 font-mono text-[10px] uppercase tracking-widest mb-3 block">{item.period}</span>
+                )}
                 <h3 className="text-xl font-bold text-white mb-1 font-heading uppercase tracking-tighter">{item.title}</h3>
                 <p className="text-slate-400 text-xs font-semibold mb-4 font-mono">{item.org}</p>
                 <p className="text-slate-500 text-xs leading-relaxed font-light">{item.desc}</p>
